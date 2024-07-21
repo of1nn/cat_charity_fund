@@ -49,7 +49,7 @@ class CharityProjectUpdate(CharityProjectBase):
 
     @validator('name')
     def name_cannot_be_null(cls, value: str):
-        if value['name'] is None:
+        if value is None:
             raise ValueError('Имя переговорки не может быть пустым!')
         return value
 

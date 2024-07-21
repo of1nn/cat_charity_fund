@@ -26,7 +26,7 @@ def upgrade():
     sa.Column('create_date', sa.DateTime(), nullable=True),
     sa.Column('close_date', sa.DateTime(), nullable=True),
     sa.Column('name', sa.String(length=100), nullable=False),
-    sa.Column('text', sa.Text(), nullable=False),
+    sa.Column('description', sa.Text(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
