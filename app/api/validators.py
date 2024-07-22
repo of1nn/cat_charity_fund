@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -11,12 +13,11 @@ async def check_name_duplicate(
     session: AsyncSession,
 ) -> None:
     project_id = await charity_project_crud.get_id_by_name(
-        project_name,
-        session
+        project_name, session
     )
     if project_id is not None:
         raise HTTPException(
-            status_code=422,
+            status_code=400,
             detail='Проект с таким именем уже существует!',
         )
 
@@ -28,7 +29,7 @@ async def check_project_exists(
     project = await charity_project_crud.get(project_id, session)
     if project is None:
         raise HTTPException(
-            status_code=404,
+            status_code=400,
             detail='Проект не найден!',
         )
     return project
@@ -40,16 +41,27 @@ async def check_project_update(
 ) -> None:
     if project.fully_invested:
         raise HTTPException(
-            status_code=422,
+            status_code=400,
             detail='Закрытый проект нельзя редактировать!',
         )
-    if (new_project.full_amount
-        and project.invested_amount > new_project.full_amount):
+    if (
+        new_project.full_amount and
+        project.invested_amount > new_project.full_amount
+    ):
         raise HTTPException(
             status_code=400,
-            detail=('Нелья установить значение',
-                    'full_amount меньше уже вложенной суммы.',)
+            detail=(
+                'Нелья установить значение '
+                'full_amount меньше уже вложенной суммы.'
+            ),
         )
+    elif (
+        new_project.full_amount and
+        project.invested_amount == new_project.full_amount
+    ):
+        # project.fully_invested = True
+        project.fully_invested = True
+        project.close_date = datetime.now()
 
 
 async def check_project_delete(
@@ -57,7 +69,8 @@ async def check_project_delete(
 ) -> None:
     if project.invested_amount:
         raise HTTPException(
-            status_code=422,
-            detail=('Нельзя удалить проект, в который',
-                    'уже были инвестированы средства!'),
+            status_code=400,
+            detail=(
+                'В проект были внесены средства, ' 'не подлежит удалению!'
+            ),
         )

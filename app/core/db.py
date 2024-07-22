@@ -7,7 +7,6 @@ from app.core.config import settings
 
 
 class PreBase:
-
     @declared_attr
     def __tablename__(cls):
         return cls.__name__.lower()
