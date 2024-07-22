@@ -37,7 +37,7 @@ def upgrade():
     sa.Column('fully_invested', sa.Boolean(), nullable=True),
     sa.Column('create_date', sa.DateTime(), nullable=True),
     sa.Column('close_date', sa.DateTime(), nullable=True),
-    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('comment', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
