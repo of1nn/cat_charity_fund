@@ -1,4 +1,3 @@
-# app/core/db.py
 from sqlalchemy import Column, Integer
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import declarative_base, sessionmaker, declared_attr

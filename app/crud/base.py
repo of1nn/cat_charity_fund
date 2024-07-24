@@ -1,4 +1,3 @@
-# app/crud/base.py
 from typing import Optional
 from datetime import datetime
 
