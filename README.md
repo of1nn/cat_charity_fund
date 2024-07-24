@@ -27,7 +27,7 @@
 
 1. **Клонируйте репозиторий**
    ```bash
-   git clone https://github.com/yourusername/cat_charity_fund.git
+   git clone https://github.com/of1nn/cat_charity_fund
    cd cat_charity_fund
    ```
 - Создайте и активируйте виртуальное окружение
